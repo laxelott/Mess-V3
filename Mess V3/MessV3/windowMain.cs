@@ -15,7 +15,6 @@ using System.Media;
 
 namespace MessV3 {
     public partial class windowMain : Form {
-
         TcpClient clientSocket;
         Thread messageThread;
 
@@ -25,6 +24,7 @@ namespace MessV3 {
 
         bool isConnected;
         bool isLogin;
+        bool isFirst;
 
         public windowMain() {
             InitializeComponent();
@@ -32,14 +32,14 @@ namespace MessV3 {
 
             isLogin = false;
             isConnected = false;
-            
+            isFirst = true;
+
             // Tabs Initialization
             loginTabInit();
             settingsTabInit();
             messagingTabInit();
 
-            messageSoundPlayer = new SoundPlayer(@"C:\Users\Laxelott\Desktop\Respaldo\Proyectos\Visual Studio\Mess V3\MessV3\Resources\ding.wav");
-            //messageSoundPlayer = new SoundPlayer(Properties.Resources.ding);
+            messageSoundPlayer = new SoundPlayer(Properties.Resources.ding);
         }
 
 
@@ -50,14 +50,12 @@ namespace MessV3 {
             txtMessage.Enabled = false;
             btnSendMessage.Enabled = false;
             menuStripSend.Enabled = false;
-            lblMessages.Enabled = false;
 
             if (isConnected) {
                 if(isLogin) {
                     txtMessage.Enabled = true;
                     btnSendMessage.Enabled = true;
                     menuStripSend.Enabled = true;
-                    lblMessages.Enabled = true;
 
                     logInfo("Awaiting Input");
                     lblMessagingLoggedinName.Text = "Logged in as " + name;
@@ -267,7 +265,15 @@ namespace MessV3 {
         // ---------------------------------------------------------- WRITE TO MESSGE LOG
         private void logMessage(string message) {
             this.Invoke((MethodInvoker)delegate {
-                lblMessages.Text += message + "\n";
+                Label lblMessage = new Label();
+                int rowIndex = isFirst ? 0 : tableMessages.RowCount;
+                isFirst = false;
+
+                // Creating label that contains message
+                lblMessage.Text = message;
+
+                // Adding label to table
+                tableMessages.Controls.Add(lblMessage, 0, rowIndex);
             });
         }
         private void logInfo(string info) {

@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(windowMain));
             this.groupMessages = new System.Windows.Forms.GroupBox();
-            this.lblMessages = new System.Windows.Forms.RichTextBox();
             this.txtMessage = new System.Windows.Forms.RichTextBox();
             this.listOnlineUsers = new System.Windows.Forms.ListBox();
             this.tableLayoutMessagesMain = new System.Windows.Forms.TableLayoutPanel();
@@ -70,21 +69,22 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtSettingsDisplayName = new System.Windows.Forms.TextBox();
             this.btnSettingsDisplayNameSave = new System.Windows.Forms.Button();
+            this.groupBoxAppSettings = new System.Windows.Forms.GroupBox();
+            this.tableLayoutAppSettings = new System.Windows.Forms.TableLayoutPanel();
+            this.chkSettingsSound = new System.Windows.Forms.CheckBox();
+            this.groupBoxServerSettings = new System.Windows.Forms.GroupBox();
+            this.tableLayoutServerSettings = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSettingsSave = new System.Windows.Forms.Button();
+            this.numSettingsPort = new System.Windows.Forms.NumericUpDown();
+            this.btnSettingsRecievePortDefault = new System.Windows.Forms.Button();
+            this.lblSettingsRecievePort = new System.Windows.Forms.Label();
+            this.txtSettingsServerLocation = new System.Windows.Forms.TextBox();
+            this.lblSettingsServerLocation = new System.Windows.Forms.Label();
             this.imageListTabs = new System.Windows.Forms.ImageList(this.components);
             this.btnConnect = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.tableLayoutInfo = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxAppSettings = new System.Windows.Forms.GroupBox();
-            this.lblSettingsServerLocation = new System.Windows.Forms.Label();
-            this.btnSettingsSave = new System.Windows.Forms.Button();
-            this.txtSettingsServerLocation = new System.Windows.Forms.TextBox();
-            this.lblSettingsRecievePort = new System.Windows.Forms.Label();
-            this.btnSettingsRecievePortDefault = new System.Windows.Forms.Button();
-            this.numSettingsPort = new System.Windows.Forms.NumericUpDown();
-            this.tableLayoutServerSettings = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxServerSettings = new System.Windows.Forms.GroupBox();
-            this.tableLayoutAppSettings = new System.Windows.Forms.TableLayoutPanel();
-            this.chkSettingsSound = new System.Windows.Forms.CheckBox();
+            this.tableMessages = new System.Windows.Forms.TableLayoutPanel();
             this.groupMessages.SuspendLayout();
             this.tableLayoutMessagesMain.SuspendLayout();
             this.groupOnlineUsers.SuspendLayout();
@@ -102,44 +102,32 @@
             this.tabSettings.SuspendLayout();
             this.groupBoxUserSettings.SuspendLayout();
             this.tableLayoutUserSettings.SuspendLayout();
-            this.tableLayoutInfo.SuspendLayout();
             this.groupBoxAppSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numSettingsPort)).BeginInit();
-            this.tableLayoutServerSettings.SuspendLayout();
-            this.groupBoxServerSettings.SuspendLayout();
             this.tableLayoutAppSettings.SuspendLayout();
+            this.groupBoxServerSettings.SuspendLayout();
+            this.tableLayoutServerSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSettingsPort)).BeginInit();
+            this.tableLayoutInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupMessages
             // 
-            this.groupMessages.Controls.Add(this.lblMessages);
+            this.groupMessages.Controls.Add(this.tableMessages);
             this.groupMessages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupMessages.Location = new System.Drawing.Point(3, 22);
+            this.groupMessages.Location = new System.Drawing.Point(3, 25);
             this.groupMessages.Name = "groupMessages";
-            this.groupMessages.Size = new System.Drawing.Size(379, 253);
+            this.groupMessages.Size = new System.Drawing.Size(519, 287);
             this.groupMessages.TabIndex = 0;
             this.groupMessages.TabStop = false;
             this.groupMessages.Text = "Messages";
             // 
-            // lblMessages
-            // 
-            this.lblMessages.BackColor = System.Drawing.Color.White;
-            this.lblMessages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblMessages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMessages.Location = new System.Drawing.Point(3, 16);
-            this.lblMessages.Name = "lblMessages";
-            this.lblMessages.ReadOnly = true;
-            this.lblMessages.Size = new System.Drawing.Size(373, 234);
-            this.lblMessages.TabIndex = 0;
-            this.lblMessages.Text = "";
-            // 
             // txtMessage
             // 
             this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMessage.Location = new System.Drawing.Point(3, 300);
+            this.txtMessage.Location = new System.Drawing.Point(3, 340);
             this.txtMessage.Name = "txtMessage";
             this.tableLayoutMessagesMain.SetRowSpan(this.txtMessage, 2);
-            this.txtMessage.Size = new System.Drawing.Size(379, 76);
+            this.txtMessage.Size = new System.Drawing.Size(519, 86);
             this.txtMessage.TabIndex = 1;
             this.txtMessage.Text = "";
             this.txtMessage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMessage_KeyPress);
@@ -150,7 +138,7 @@
             this.listOnlineUsers.FormattingEnabled = true;
             this.listOnlineUsers.Location = new System.Drawing.Point(3, 16);
             this.listOnlineUsers.Name = "listOnlineUsers";
-            this.listOnlineUsers.Size = new System.Drawing.Size(153, 272);
+            this.listOnlineUsers.Size = new System.Drawing.Size(213, 312);
             this.listOnlineUsers.TabIndex = 3;
             // 
             // tableLayoutMessagesMain
@@ -174,7 +162,7 @@
             this.tableLayoutMessagesMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.263158F));
             this.tableLayoutMessagesMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.52632F));
             this.tableLayoutMessagesMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.52632F));
-            this.tableLayoutMessagesMain.Size = new System.Drawing.Size(550, 379);
+            this.tableLayoutMessagesMain.Size = new System.Drawing.Size(750, 429);
             this.tableLayoutMessagesMain.TabIndex = 4;
             // 
             // lblMessagingLoggedinName
@@ -192,9 +180,9 @@
             this.btnSendMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSendMessage.Image = ((System.Drawing.Image)(resources.GetObject("btnSendMessage.Image")));
             this.btnSendMessage.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSendMessage.Location = new System.Drawing.Point(388, 339);
+            this.btnSendMessage.Location = new System.Drawing.Point(528, 385);
             this.btnSendMessage.Name = "btnSendMessage";
-            this.btnSendMessage.Size = new System.Drawing.Size(159, 37);
+            this.btnSendMessage.Size = new System.Drawing.Size(219, 41);
             this.btnSendMessage.TabIndex = 2;
             this.btnSendMessage.Text = "Send Message";
             this.btnSendMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -205,10 +193,10 @@
             // 
             this.groupOnlineUsers.Controls.Add(this.listOnlineUsers);
             this.groupOnlineUsers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupOnlineUsers.Location = new System.Drawing.Point(388, 3);
+            this.groupOnlineUsers.Location = new System.Drawing.Point(528, 3);
             this.groupOnlineUsers.Name = "groupOnlineUsers";
             this.tableLayoutMessagesMain.SetRowSpan(this.groupOnlineUsers, 3);
-            this.groupOnlineUsers.Size = new System.Drawing.Size(159, 291);
+            this.groupOnlineUsers.Size = new System.Drawing.Size(219, 331);
             this.groupOnlineUsers.TabIndex = 1;
             this.groupOnlineUsers.TabStop = false;
             this.groupOnlineUsers.Text = "Online Users";
@@ -217,9 +205,9 @@
             // 
             this.lblMessageTitle.AutoSize = true;
             this.lblMessageTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMessageTitle.Location = new System.Drawing.Point(3, 278);
+            this.lblMessageTitle.Location = new System.Drawing.Point(3, 315);
             this.lblMessageTitle.Name = "lblMessageTitle";
-            this.lblMessageTitle.Size = new System.Drawing.Size(379, 19);
+            this.lblMessageTitle.Size = new System.Drawing.Size(519, 22);
             this.lblMessageTitle.TabIndex = 3;
             this.lblMessageTitle.Text = "Message";
             this.lblMessageTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -229,9 +217,9 @@
             this.menuStripSend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuStripSend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuStripItemSendMain});
-            this.menuStripSend.Location = new System.Drawing.Point(385, 297);
+            this.menuStripSend.Location = new System.Drawing.Point(525, 337);
             this.menuStripSend.Name = "menuStripSend";
-            this.menuStripSend.Size = new System.Drawing.Size(165, 39);
+            this.menuStripSend.Size = new System.Drawing.Size(225, 45);
             this.menuStripSend.TabIndex = 5;
             this.menuStripSend.Text = "menuStrip1";
             // 
@@ -269,7 +257,7 @@
             this.tabControlMain.Location = new System.Drawing.Point(10, 39);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(564, 412);
+            this.tabControlMain.Size = new System.Drawing.Size(764, 462);
             this.tabControlMain.TabIndex = 7;
             this.tabControlMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Selected);
             // 
@@ -281,7 +269,7 @@
             this.tabMessaging.Location = new System.Drawing.Point(4, 23);
             this.tabMessaging.Name = "tabMessaging";
             this.tabMessaging.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMessaging.Size = new System.Drawing.Size(556, 385);
+            this.tabMessaging.Size = new System.Drawing.Size(756, 435);
             this.tabMessaging.TabIndex = 0;
             this.tabMessaging.Text = "Messaging";
             // 
@@ -294,7 +282,7 @@
             this.tabLogin.Location = new System.Drawing.Point(4, 23);
             this.tabLogin.Name = "tabLogin";
             this.tabLogin.Padding = new System.Windows.Forms.Padding(15);
-            this.tabLogin.Size = new System.Drawing.Size(556, 385);
+            this.tabLogin.Size = new System.Drawing.Size(756, 435);
             this.tabLogin.TabIndex = 2;
             this.tabLogin.Text = "Login / Registration";
             // 
@@ -317,7 +305,7 @@
             this.tableLayoutLoginMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutLoginMain.Controls.Add(this.chkLoginRegistration, 0, 1);
             this.tableLayoutLoginMain.Controls.Add(this.groupBoxLogin, 0, 0);
-            this.tableLayoutLoginMain.Location = new System.Drawing.Point(130, 67);
+            this.tableLayoutLoginMain.Location = new System.Drawing.Point(230, 92);
             this.tableLayoutLoginMain.Name = "tableLayoutLoginMain";
             this.tableLayoutLoginMain.RowCount = 2;
             this.tableLayoutLoginMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
@@ -537,7 +525,7 @@
             this.tabSettings.Location = new System.Drawing.Point(4, 23);
             this.tabSettings.Name = "tabSettings";
             this.tabSettings.Padding = new System.Windows.Forms.Padding(30);
-            this.tabSettings.Size = new System.Drawing.Size(556, 385);
+            this.tabSettings.Size = new System.Drawing.Size(756, 435);
             this.tabSettings.TabIndex = 1;
             this.tabSettings.Text = "Settings";
             // 
@@ -550,7 +538,7 @@
             this.groupBoxUserSettings.Location = new System.Drawing.Point(30, 262);
             this.groupBoxUserSettings.Name = "groupBoxUserSettings";
             this.groupBoxUserSettings.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBoxUserSettings.Size = new System.Drawing.Size(496, 85);
+            this.groupBoxUserSettings.Size = new System.Drawing.Size(696, 85);
             this.groupBoxUserSettings.TabIndex = 1;
             this.groupBoxUserSettings.TabStop = false;
             this.groupBoxUserSettings.Text = "User Settings";
@@ -572,7 +560,7 @@
             this.tableLayoutUserSettings.RowCount = 2;
             this.tableLayoutUserSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutUserSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutUserSettings.Size = new System.Drawing.Size(476, 52);
+            this.tableLayoutUserSettings.Size = new System.Drawing.Size(676, 52);
             this.tableLayoutUserSettings.TabIndex = 0;
             // 
             // label1
@@ -581,7 +569,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label1.Location = new System.Drawing.Point(3, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(327, 13);
+            this.label1.Size = new System.Drawing.Size(467, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Display Name";
             // 
@@ -590,67 +578,20 @@
             this.txtSettingsDisplayName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtSettingsDisplayName.Location = new System.Drawing.Point(3, 29);
             this.txtSettingsDisplayName.Name = "txtSettingsDisplayName";
-            this.txtSettingsDisplayName.Size = new System.Drawing.Size(327, 20);
+            this.txtSettingsDisplayName.Size = new System.Drawing.Size(467, 20);
             this.txtSettingsDisplayName.TabIndex = 1;
             this.txtSettingsDisplayName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSettingsNameSave_KeyPress);
             // 
             // btnSettingsDisplayNameSave
             // 
             this.btnSettingsDisplayNameSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSettingsDisplayNameSave.Location = new System.Drawing.Point(336, 29);
+            this.btnSettingsDisplayNameSave.Location = new System.Drawing.Point(476, 29);
             this.btnSettingsDisplayNameSave.Name = "btnSettingsDisplayNameSave";
-            this.btnSettingsDisplayNameSave.Size = new System.Drawing.Size(137, 20);
+            this.btnSettingsDisplayNameSave.Size = new System.Drawing.Size(197, 20);
             this.btnSettingsDisplayNameSave.TabIndex = 2;
             this.btnSettingsDisplayNameSave.Text = "Save";
             this.btnSettingsDisplayNameSave.UseVisualStyleBackColor = true;
             this.btnSettingsDisplayNameSave.Click += new System.EventHandler(this.btnSettingsNameSave_Click);
-            // 
-            // imageListTabs
-            // 
-            this.imageListTabs.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTabs.ImageStream")));
-            this.imageListTabs.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListTabs.Images.SetKeyName(0, "bubble_16.png");
-            this.imageListTabs.Images.SetKeyName(1, "user_16.png");
-            this.imageListTabs.Images.SetKeyName(2, "gear_16.png");
-            // 
-            // btnConnect
-            // 
-            this.btnConnect.AutoSize = true;
-            this.btnConnect.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnConnect.Location = new System.Drawing.Point(458, 3);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(103, 23);
-            this.btnConnect.TabIndex = 9;
-            this.btnConnect.Text = "Connect to Server";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-            // 
-            // lblInfo
-            // 
-            this.lblInfo.AutoSize = true;
-            this.lblInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblInfo.Location = new System.Drawing.Point(3, 0);
-            this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(445, 13);
-            this.lblInfo.TabIndex = 10;
-            this.lblInfo.Text = "Awaiting Input";
-            // 
-            // tableLayoutInfo
-            // 
-            this.tableLayoutInfo.AutoSize = true;
-            this.tableLayoutInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutInfo.ColumnCount = 2;
-            this.tableLayoutInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutInfo.Controls.Add(this.btnConnect, 1, 0);
-            this.tableLayoutInfo.Controls.Add(this.lblInfo, 0, 0);
-            this.tableLayoutInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutInfo.Location = new System.Drawing.Point(10, 10);
-            this.tableLayoutInfo.Name = "tableLayoutInfo";
-            this.tableLayoutInfo.RowCount = 1;
-            this.tableLayoutInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutInfo.Size = new System.Drawing.Size(564, 29);
-            this.tableLayoutInfo.TabIndex = 11;
             // 
             // groupBoxAppSettings
             // 
@@ -661,81 +602,52 @@
             this.groupBoxAppSettings.Location = new System.Drawing.Point(30, 206);
             this.groupBoxAppSettings.Name = "groupBoxAppSettings";
             this.groupBoxAppSettings.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBoxAppSettings.Size = new System.Drawing.Size(496, 56);
+            this.groupBoxAppSettings.Size = new System.Drawing.Size(696, 56);
             this.groupBoxAppSettings.TabIndex = 2;
             this.groupBoxAppSettings.TabStop = false;
             this.groupBoxAppSettings.Text = "Application Settings";
             // 
-            // lblSettingsServerLocation
+            // tableLayoutAppSettings
             // 
-            this.lblSettingsServerLocation.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblSettingsServerLocation.Location = new System.Drawing.Point(3, 5);
-            this.lblSettingsServerLocation.Name = "lblSettingsServerLocation";
-            this.lblSettingsServerLocation.Size = new System.Drawing.Size(327, 20);
-            this.lblSettingsServerLocation.TabIndex = 0;
-            this.lblSettingsServerLocation.Text = "Server Location:";
-            this.lblSettingsServerLocation.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.tableLayoutAppSettings.AutoSize = true;
+            this.tableLayoutAppSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutAppSettings.ColumnCount = 2;
+            this.tableLayoutAppSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutAppSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutAppSettings.Controls.Add(this.chkSettingsSound, 0, 0);
+            this.tableLayoutAppSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutAppSettings.Location = new System.Drawing.Point(10, 23);
+            this.tableLayoutAppSettings.Name = "tableLayoutAppSettings";
+            this.tableLayoutAppSettings.RowCount = 1;
+            this.tableLayoutAppSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutAppSettings.Size = new System.Drawing.Size(676, 23);
+            this.tableLayoutAppSettings.TabIndex = 0;
             // 
-            // btnSettingsSave
+            // chkSettingsSound
             // 
-            this.tableLayoutServerSettings.SetColumnSpan(this.btnSettingsSave, 2);
-            this.btnSettingsSave.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSettingsSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnSettingsSave.Location = new System.Drawing.Point(3, 103);
-            this.btnSettingsSave.Name = "btnSettingsSave";
-            this.btnSettingsSave.Size = new System.Drawing.Size(470, 30);
-            this.btnSettingsSave.TabIndex = 6;
-            this.btnSettingsSave.Text = "Save Settings";
-            this.btnSettingsSave.UseVisualStyleBackColor = true;
-            this.btnSettingsSave.Click += new System.EventHandler(this.btnSettingsSave_Click);
+            this.chkSettingsSound.AutoSize = true;
+            this.chkSettingsSound.Checked = true;
+            this.chkSettingsSound.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSettingsSound.Location = new System.Drawing.Point(3, 3);
+            this.chkSettingsSound.Name = "chkSettingsSound";
+            this.chkSettingsSound.Size = new System.Drawing.Size(84, 17);
+            this.chkSettingsSound.TabIndex = 4;
+            this.chkSettingsSound.Text = "Play sound?";
+            this.chkSettingsSound.UseVisualStyleBackColor = true;
             // 
-            // txtSettingsServerLocation
+            // groupBoxServerSettings
             // 
-            this.txtSettingsServerLocation.AllowDrop = true;
-            this.txtSettingsServerLocation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSettingsServerLocation.Location = new System.Drawing.Point(3, 28);
-            this.txtSettingsServerLocation.Name = "txtSettingsServerLocation";
-            this.txtSettingsServerLocation.Size = new System.Drawing.Size(327, 20);
-            this.txtSettingsServerLocation.TabIndex = 1;
-            this.txtSettingsServerLocation.TextChanged += new System.EventHandler(this.inputSettings_Changed);
-            this.txtSettingsServerLocation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputSettings_KeyPress);
-            // 
-            // lblSettingsRecievePort
-            // 
-            this.lblSettingsRecievePort.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblSettingsRecievePort.Location = new System.Drawing.Point(3, 55);
-            this.lblSettingsRecievePort.Name = "lblSettingsRecievePort";
-            this.lblSettingsRecievePort.Size = new System.Drawing.Size(327, 20);
-            this.lblSettingsRecievePort.TabIndex = 0;
-            this.lblSettingsRecievePort.Text = "Client Port:";
-            this.lblSettingsRecievePort.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // btnSettingsRecievePortDefault
-            // 
-            this.btnSettingsRecievePortDefault.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSettingsRecievePortDefault.Location = new System.Drawing.Point(336, 78);
-            this.btnSettingsRecievePortDefault.Name = "btnSettingsRecievePortDefault";
-            this.btnSettingsRecievePortDefault.Size = new System.Drawing.Size(137, 19);
-            this.btnSettingsRecievePortDefault.TabIndex = 4;
-            this.btnSettingsRecievePortDefault.Text = "Set as default";
-            this.btnSettingsRecievePortDefault.UseVisualStyleBackColor = true;
-            this.btnSettingsRecievePortDefault.Click += new System.EventHandler(this.btnSettingsRecievePortDefault_Click);
-            // 
-            // numSettingsPort
-            // 
-            this.numSettingsPort.AllowDrop = true;
-            this.numSettingsPort.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numSettingsPort.Location = new System.Drawing.Point(3, 78);
-            this.numSettingsPort.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.numSettingsPort.Name = "numSettingsPort";
-            this.numSettingsPort.Size = new System.Drawing.Size(327, 20);
-            this.numSettingsPort.TabIndex = 2;
-            this.numSettingsPort.ValueChanged += new System.EventHandler(this.inputSettings_Changed);
-            this.numSettingsPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputSettings_KeyPress);
+            this.groupBoxServerSettings.AutoSize = true;
+            this.groupBoxServerSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBoxServerSettings.Controls.Add(this.tableLayoutServerSettings);
+            this.groupBoxServerSettings.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxServerSettings.Location = new System.Drawing.Point(30, 30);
+            this.groupBoxServerSettings.Name = "groupBoxServerSettings";
+            this.groupBoxServerSettings.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBoxServerSettings.Size = new System.Drawing.Size(696, 176);
+            this.groupBoxServerSettings.TabIndex = 3;
+            this.groupBoxServerSettings.TabStop = false;
+            this.groupBoxServerSettings.Text = "Server Settings";
             // 
             // tableLayoutServerSettings
             // 
@@ -761,56 +673,145 @@
             this.tableLayoutServerSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.68421F));
             this.tableLayoutServerSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutServerSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutServerSettings.Size = new System.Drawing.Size(476, 143);
+            this.tableLayoutServerSettings.Size = new System.Drawing.Size(676, 143);
             this.tableLayoutServerSettings.TabIndex = 0;
             // 
-            // groupBoxServerSettings
+            // btnSettingsSave
             // 
-            this.groupBoxServerSettings.AutoSize = true;
-            this.groupBoxServerSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBoxServerSettings.Controls.Add(this.tableLayoutServerSettings);
-            this.groupBoxServerSettings.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBoxServerSettings.Location = new System.Drawing.Point(30, 30);
-            this.groupBoxServerSettings.Name = "groupBoxServerSettings";
-            this.groupBoxServerSettings.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBoxServerSettings.Size = new System.Drawing.Size(496, 176);
-            this.groupBoxServerSettings.TabIndex = 3;
-            this.groupBoxServerSettings.TabStop = false;
-            this.groupBoxServerSettings.Text = "Server Settings";
+            this.tableLayoutServerSettings.SetColumnSpan(this.btnSettingsSave, 2);
+            this.btnSettingsSave.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSettingsSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnSettingsSave.Location = new System.Drawing.Point(3, 103);
+            this.btnSettingsSave.Name = "btnSettingsSave";
+            this.btnSettingsSave.Size = new System.Drawing.Size(670, 30);
+            this.btnSettingsSave.TabIndex = 6;
+            this.btnSettingsSave.Text = "Save Settings";
+            this.btnSettingsSave.UseVisualStyleBackColor = true;
+            this.btnSettingsSave.Click += new System.EventHandler(this.btnSettingsSave_Click);
             // 
-            // tableLayoutAppSettings
+            // numSettingsPort
             // 
-            this.tableLayoutAppSettings.AutoSize = true;
-            this.tableLayoutAppSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutAppSettings.ColumnCount = 2;
-            this.tableLayoutAppSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutAppSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutAppSettings.Controls.Add(this.chkSettingsSound, 0, 0);
-            this.tableLayoutAppSettings.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutAppSettings.Location = new System.Drawing.Point(10, 23);
-            this.tableLayoutAppSettings.Name = "tableLayoutAppSettings";
-            this.tableLayoutAppSettings.RowCount = 1;
-            this.tableLayoutAppSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutAppSettings.Size = new System.Drawing.Size(476, 23);
-            this.tableLayoutAppSettings.TabIndex = 0;
+            this.numSettingsPort.AllowDrop = true;
+            this.numSettingsPort.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numSettingsPort.Location = new System.Drawing.Point(3, 78);
+            this.numSettingsPort.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.numSettingsPort.Name = "numSettingsPort";
+            this.numSettingsPort.Size = new System.Drawing.Size(467, 20);
+            this.numSettingsPort.TabIndex = 2;
+            this.numSettingsPort.ValueChanged += new System.EventHandler(this.inputSettings_Changed);
+            this.numSettingsPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputSettings_KeyPress);
             // 
-            // chkSettingsSound
+            // btnSettingsRecievePortDefault
             // 
-            this.chkSettingsSound.AutoSize = true;
-            this.chkSettingsSound.Checked = true;
-            this.chkSettingsSound.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSettingsSound.Location = new System.Drawing.Point(3, 3);
-            this.chkSettingsSound.Name = "chkSettingsSound";
-            this.chkSettingsSound.Size = new System.Drawing.Size(84, 17);
-            this.chkSettingsSound.TabIndex = 4;
-            this.chkSettingsSound.Text = "Play sound?";
-            this.chkSettingsSound.UseVisualStyleBackColor = true;
+            this.btnSettingsRecievePortDefault.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSettingsRecievePortDefault.Location = new System.Drawing.Point(476, 78);
+            this.btnSettingsRecievePortDefault.Name = "btnSettingsRecievePortDefault";
+            this.btnSettingsRecievePortDefault.Size = new System.Drawing.Size(197, 19);
+            this.btnSettingsRecievePortDefault.TabIndex = 4;
+            this.btnSettingsRecievePortDefault.Text = "Set as default";
+            this.btnSettingsRecievePortDefault.UseVisualStyleBackColor = true;
+            this.btnSettingsRecievePortDefault.Click += new System.EventHandler(this.btnSettingsRecievePortDefault_Click);
+            // 
+            // lblSettingsRecievePort
+            // 
+            this.lblSettingsRecievePort.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblSettingsRecievePort.Location = new System.Drawing.Point(3, 55);
+            this.lblSettingsRecievePort.Name = "lblSettingsRecievePort";
+            this.lblSettingsRecievePort.Size = new System.Drawing.Size(467, 20);
+            this.lblSettingsRecievePort.TabIndex = 0;
+            this.lblSettingsRecievePort.Text = "Client Port:";
+            this.lblSettingsRecievePort.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // txtSettingsServerLocation
+            // 
+            this.txtSettingsServerLocation.AllowDrop = true;
+            this.txtSettingsServerLocation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSettingsServerLocation.Location = new System.Drawing.Point(3, 28);
+            this.txtSettingsServerLocation.Name = "txtSettingsServerLocation";
+            this.txtSettingsServerLocation.Size = new System.Drawing.Size(467, 20);
+            this.txtSettingsServerLocation.TabIndex = 1;
+            this.txtSettingsServerLocation.TextChanged += new System.EventHandler(this.inputSettings_Changed);
+            this.txtSettingsServerLocation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputSettings_KeyPress);
+            // 
+            // lblSettingsServerLocation
+            // 
+            this.lblSettingsServerLocation.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblSettingsServerLocation.Location = new System.Drawing.Point(3, 5);
+            this.lblSettingsServerLocation.Name = "lblSettingsServerLocation";
+            this.lblSettingsServerLocation.Size = new System.Drawing.Size(467, 20);
+            this.lblSettingsServerLocation.TabIndex = 0;
+            this.lblSettingsServerLocation.Text = "Server Location:";
+            this.lblSettingsServerLocation.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // imageListTabs
+            // 
+            this.imageListTabs.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTabs.ImageStream")));
+            this.imageListTabs.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTabs.Images.SetKeyName(0, "bubble_16.png");
+            this.imageListTabs.Images.SetKeyName(1, "user_16.png");
+            this.imageListTabs.Images.SetKeyName(2, "gear_16.png");
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.AutoSize = true;
+            this.btnConnect.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnConnect.Location = new System.Drawing.Point(658, 3);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(103, 23);
+            this.btnConnect.TabIndex = 9;
+            this.btnConnect.Text = "Connect to Server";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblInfo.Location = new System.Drawing.Point(3, 0);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(605, 13);
+            this.lblInfo.TabIndex = 10;
+            this.lblInfo.Text = "Awaiting Input";
+            // 
+            // tableLayoutInfo
+            // 
+            this.tableLayoutInfo.AutoSize = true;
+            this.tableLayoutInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutInfo.ColumnCount = 2;
+            this.tableLayoutInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutInfo.Controls.Add(this.btnConnect, 1, 0);
+            this.tableLayoutInfo.Controls.Add(this.lblInfo, 0, 0);
+            this.tableLayoutInfo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutInfo.Location = new System.Drawing.Point(10, 10);
+            this.tableLayoutInfo.Name = "tableLayoutInfo";
+            this.tableLayoutInfo.RowCount = 1;
+            this.tableLayoutInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutInfo.Size = new System.Drawing.Size(764, 29);
+            this.tableLayoutInfo.TabIndex = 11;
+            // 
+            // tableMessages
+            // 
+            this.tableMessages.ColumnCount = 1;
+            this.tableMessages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableMessages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableMessages.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableMessages.Location = new System.Drawing.Point(3, 16);
+            this.tableMessages.Name = "tableMessages";
+            this.tableMessages.RowCount = 1;
+            this.tableMessages.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableMessages.Size = new System.Drawing.Size(513, 20);
+            this.tableMessages.TabIndex = 0;
             // 
             // windowMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 461);
+            this.ClientSize = new System.Drawing.Size(784, 511);
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.tableLayoutInfo);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -848,17 +849,17 @@
             this.groupBoxUserSettings.PerformLayout();
             this.tableLayoutUserSettings.ResumeLayout(false);
             this.tableLayoutUserSettings.PerformLayout();
-            this.tableLayoutInfo.ResumeLayout(false);
-            this.tableLayoutInfo.PerformLayout();
             this.groupBoxAppSettings.ResumeLayout(false);
             this.groupBoxAppSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numSettingsPort)).EndInit();
-            this.tableLayoutServerSettings.ResumeLayout(false);
-            this.tableLayoutServerSettings.PerformLayout();
-            this.groupBoxServerSettings.ResumeLayout(false);
-            this.groupBoxServerSettings.PerformLayout();
             this.tableLayoutAppSettings.ResumeLayout(false);
             this.tableLayoutAppSettings.PerformLayout();
+            this.groupBoxServerSettings.ResumeLayout(false);
+            this.groupBoxServerSettings.PerformLayout();
+            this.tableLayoutServerSettings.ResumeLayout(false);
+            this.tableLayoutServerSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSettingsPort)).EndInit();
+            this.tableLayoutInfo.ResumeLayout(false);
+            this.tableLayoutInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -904,7 +905,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutInfo;
         private System.Windows.Forms.Label lblLoginLoggedinName;
         private System.Windows.Forms.Label lblMessagingLoggedinName;
-        private System.Windows.Forms.RichTextBox lblMessages;
         private System.Windows.Forms.GroupBox groupBoxUserSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutUserSettings;
         private System.Windows.Forms.Label label1;
@@ -921,6 +921,7 @@
         private System.Windows.Forms.Button btnSettingsSave;
         private System.Windows.Forms.Label lblSettingsServerLocation;
         private System.Windows.Forms.CheckBox chkSettingsSound;
+        private System.Windows.Forms.TableLayoutPanel tableMessages;
     }
 }
 
