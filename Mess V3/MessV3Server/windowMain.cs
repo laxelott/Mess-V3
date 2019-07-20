@@ -21,6 +21,7 @@ namespace MessV3Server {
     public partial class windowMain : Form {
 
         private static Dictionary<TcpClient, MessClient> clientList;
+        private static Dictionary<TcpClient, MessClient> mutedUsers;
 
         private TcpListener serverSocket;
         private Thread serverThread;
@@ -65,6 +66,7 @@ namespace MessV3Server {
                     continue;
                 }
 
+
                 MessMessage inMessage, outMessage;
                 string messageJSON;
                 int token;
@@ -85,7 +87,15 @@ namespace MessV3Server {
                     // Parse data from JSON String
                     content = JsonConvert.DeserializeObject(inMessage.content);
                     token = content.token;
+                    
+                    // TODO Ban users
+                    /* 
+                    if () {
 
+                    } else {
+
+                    }
+                    */
                     content = new JObject();
                     content.isValid = (token == "MessV3".GetHashCode());
                     content.message = (Boolean) content.isValid ? "Valid Token" : "Invalid Token";
@@ -409,6 +419,8 @@ namespace MessV3Server {
                     authorName = clientList[clientSocket].name;
                     id = clientList[clientSocket].id;
 
+                    
+                    
                     // Check for message type
                     switch (inMessage.type) {
                         case MessageTypes.Terminate:
@@ -458,25 +470,48 @@ namespace MessV3Server {
 
                             sendMessage(outMessage.toJSON(), clientSocket);
                             break;
-                        // Is normal message
-                        default:
-                            if (clientList[clientSocket].isLogin) {
-                                // Adding author
-                                content.author = authorName;
+                        case MessageTypes.TextMessage:
+                            // Text message
+                            if (!mutedUsers.ContainsValue(clientList[clientSocket])) {
+
+                                if (clientList[clientSocket].isLogin) {
+                                    // Adding author
+                                    content.author = authorName;
+
+                                    // Setting message up
+                                    outMessage.type = inMessage.type;
+                                    outMessage.time = Utilities.DateTime2UnixTimeStamp(DateTime.UtcNow);
+                                    outMessage.content = JsonConvert.SerializeObject(content);
+
+                                    // Logging message
+                                    logMessage(outMessage);
+                                    // Sending message to all
+                                    broadcast(outMessage.toJSON());
+                                } else {
+                                    // User hasn't logged in
+                                    // TODO Add generic "Server response" message type
+                                    // Highjacking registering data because of client's internal response to it
+
+                                    // Setting message up
+                                    outMessage.type = MessageTypes.RegisterData;
+                                    outMessage.content = "Cannot send messages, user hasn't logged in!";
+
+                                    // Sending message
+                                    sendMessage(outMessage.toJSON(), clientSocket);
+                                }
+                            } else {
+                                // User is muted
+                                // Same as before
 
                                 // Setting message up
-                                outMessage.type = inMessage.type;
-                                outMessage.time = Utilities.DateTime2UnixTimeStamp(DateTime.UtcNow);
-                                outMessage.content = JsonConvert.SerializeObject(content);
+                                outMessage.type = MessageTypes.RegisterData;
+                                outMessage.content = "User is muted";
 
-                                // Logging message
-                                logMessage(outMessage);
-                                // Sending message to all
-                                broadcast(outMessage.toJSON());
-                            } else {
-                                continue;
+                                // Sending message
+                                sendMessage(outMessage.toJSON(), clientSocket);
                             }
                             break;
+
                     }
                 }
             } catch (IOException e) {

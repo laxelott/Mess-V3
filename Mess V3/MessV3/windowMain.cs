@@ -421,7 +421,7 @@ namespace MessV3 {
 
                         // IMAGE MESSAGE
                         case MessageTypes.ImageMessage:
-                            displayMessage = String.Format("[{0}] {1} IMAGE>> {2}",
+                            displayMessage = String.Format("[{0}] {1} IMAGE (TBA)>> {2}",
                                 Utilities.UnixTimeStamp2DateTime(message.time).ToString("dd-MM-yyyy HH:mm:ss"),
                                 content.author,
                                 content.message
@@ -431,7 +431,7 @@ namespace MessV3 {
 
                         // FILE MESSAGE
                         case MessageTypes.FileMessage:
-                            displayMessage = String.Format("[{0}] {1} FILE>> {2}",
+                            displayMessage = String.Format("[{0}] {1} FILE (TBA)>> {2}",
                                 Utilities.UnixTimeStamp2DateTime(message.time).ToString("dd-MM-yyyy HH:mm:ss"),
                                 content.author,
                                 content.message
