@@ -6,7 +6,12 @@ It's just a Messaging app created in C#, created for ~~fun~~ the sole purpose of
 - [x] Create, modify and ~~delete~~ users.
 - [x] Send and recieve messages, with _virtually_ unlimited clients.
 - [ ] Delete users.
-- [ ] Admin function.
+- [ ] Admin functions.
+	* All this on server window and on Admin tab when logged in as admin
+	- [ ] Mute users.
+	- [ ] Delete users.
+	- [ ] Lock down server.
+	- [ ] Ban users?
 - [ ] Send and recieve images.
 - [ ] Send and recieve files.
 - [ ] User icons.
