@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(windowMain));
             this.groupMessages = new System.Windows.Forms.GroupBox();
+            this.tableMessages = new System.Windows.Forms.TableLayoutPanel();
             this.txtMessage = new System.Windows.Forms.RichTextBox();
             this.listOnlineUsers = new System.Windows.Forms.ListBox();
             this.tableLayoutMessagesMain = new System.Windows.Forms.TableLayoutPanel();
@@ -74,17 +75,16 @@
             this.chkSettingsSound = new System.Windows.Forms.CheckBox();
             this.groupBoxServerSettings = new System.Windows.Forms.GroupBox();
             this.tableLayoutServerSettings = new System.Windows.Forms.TableLayoutPanel();
-            this.btnSettingsSave = new System.Windows.Forms.Button();
             this.numSettingsPort = new System.Windows.Forms.NumericUpDown();
             this.btnSettingsRecievePortDefault = new System.Windows.Forms.Button();
             this.lblSettingsRecievePort = new System.Windows.Forms.Label();
             this.txtSettingsServerLocation = new System.Windows.Forms.TextBox();
+            this.btnSettingsSave = new System.Windows.Forms.Button();
             this.lblSettingsServerLocation = new System.Windows.Forms.Label();
             this.imageListTabs = new System.Windows.Forms.ImageList(this.components);
             this.btnConnect = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.tableLayoutInfo = new System.Windows.Forms.TableLayoutPanel();
-            this.tableMessages = new System.Windows.Forms.TableLayoutPanel();
             this.groupMessages.SuspendLayout();
             this.tableLayoutMessagesMain.SuspendLayout();
             this.groupOnlineUsers.SuspendLayout();
@@ -120,6 +120,23 @@
             this.groupMessages.TabIndex = 0;
             this.groupMessages.TabStop = false;
             this.groupMessages.Text = "Messages";
+            // 
+            // tableMessages
+            // 
+            this.tableMessages.AutoSize = true;
+            this.tableMessages.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableMessages.BackColor = System.Drawing.Color.Silver;
+            this.tableMessages.ColumnCount = 1;
+            this.tableMessages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableMessages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableMessages.Location = new System.Drawing.Point(3, 16);
+            this.tableMessages.Margin = new System.Windows.Forms.Padding(0);
+            this.tableMessages.MinimumSize = new System.Drawing.Size(100, 100);
+            this.tableMessages.Name = "tableMessages";
+            this.tableMessages.RowCount = 1;
+            this.tableMessages.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableMessages.Size = new System.Drawing.Size(513, 268);
+            this.tableMessages.TabIndex = 0;
             // 
             // txtMessage
             // 
@@ -229,7 +246,7 @@
             this.menuStripItemSendImage,
             this.menuStripItemSendFile});
             this.menuStripItemSendMain.Name = "menuStripItemSendMain";
-            this.menuStripItemSendMain.Size = new System.Drawing.Size(106, 35);
+            this.menuStripItemSendMain.Size = new System.Drawing.Size(106, 41);
             this.menuStripItemSendMain.Text = "Send Something";
             this.menuStripItemSendMain.Visible = false;
             // 
@@ -676,19 +693,6 @@
             this.tableLayoutServerSettings.Size = new System.Drawing.Size(676, 143);
             this.tableLayoutServerSettings.TabIndex = 0;
             // 
-            // btnSettingsSave
-            // 
-            this.tableLayoutServerSettings.SetColumnSpan(this.btnSettingsSave, 2);
-            this.btnSettingsSave.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSettingsSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnSettingsSave.Location = new System.Drawing.Point(3, 103);
-            this.btnSettingsSave.Name = "btnSettingsSave";
-            this.btnSettingsSave.Size = new System.Drawing.Size(670, 30);
-            this.btnSettingsSave.TabIndex = 6;
-            this.btnSettingsSave.Text = "Save Settings";
-            this.btnSettingsSave.UseVisualStyleBackColor = true;
-            this.btnSettingsSave.Click += new System.EventHandler(this.btnSettingsSave_Click);
-            // 
             // numSettingsPort
             // 
             this.numSettingsPort.AllowDrop = true;
@@ -736,6 +740,19 @@
             this.txtSettingsServerLocation.TabIndex = 1;
             this.txtSettingsServerLocation.TextChanged += new System.EventHandler(this.inputSettings_Changed);
             this.txtSettingsServerLocation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputSettings_KeyPress);
+            // 
+            // btnSettingsSave
+            // 
+            this.tableLayoutServerSettings.SetColumnSpan(this.btnSettingsSave, 2);
+            this.btnSettingsSave.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSettingsSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnSettingsSave.Location = new System.Drawing.Point(3, 103);
+            this.btnSettingsSave.Name = "btnSettingsSave";
+            this.btnSettingsSave.Size = new System.Drawing.Size(670, 30);
+            this.btnSettingsSave.TabIndex = 6;
+            this.btnSettingsSave.Text = "Save Settings";
+            this.btnSettingsSave.UseVisualStyleBackColor = true;
+            this.btnSettingsSave.Click += new System.EventHandler(this.btnSettingsSave_Click);
             // 
             // lblSettingsServerLocation
             // 
@@ -794,19 +811,6 @@
             this.tableLayoutInfo.Size = new System.Drawing.Size(764, 29);
             this.tableLayoutInfo.TabIndex = 11;
             // 
-            // tableMessages
-            // 
-            this.tableMessages.ColumnCount = 1;
-            this.tableMessages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableMessages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableMessages.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableMessages.Location = new System.Drawing.Point(3, 16);
-            this.tableMessages.Name = "tableMessages";
-            this.tableMessages.RowCount = 1;
-            this.tableMessages.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableMessages.Size = new System.Drawing.Size(513, 20);
-            this.tableMessages.TabIndex = 0;
-            // 
             // windowMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -821,6 +825,7 @@
             this.Text = "Mess V3";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.windowMain_FormClosing);
             this.groupMessages.ResumeLayout(false);
+            this.groupMessages.PerformLayout();
             this.tableLayoutMessagesMain.ResumeLayout(false);
             this.tableLayoutMessagesMain.PerformLayout();
             this.groupOnlineUsers.ResumeLayout(false);

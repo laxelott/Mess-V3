@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- Host:                         localhost
--- Server version:               10.1.30-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win32
+-- Host:                         127.0.0.1
+-- Server version:               10.1.40-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
 -- HeidiSQL Version:             10.1.0.5464
 -- --------------------------------------------------------
 
@@ -185,11 +185,7 @@ CREATE TABLE IF NOT EXISTS `t_messages` (
   CONSTRAINT `t_messages_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `t_users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table messv3.t_messages: ~0 rows (approximately)
-DELETE FROM `t_messages`;
-/*!40000 ALTER TABLE `t_messages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_messages` ENABLE KEYS */;
-
+-- Data exporting was unselected.
 -- Dumping structure for table messv3.t_users
 DROP TABLE IF EXISTS `t_users`;
 CREATE TABLE IF NOT EXISTS `t_users` (
@@ -200,15 +196,7 @@ CREATE TABLE IF NOT EXISTS `t_users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table messv3.t_users: ~3 rows (approximately)
-DELETE FROM `t_users`;
-/*!40000 ALTER TABLE `t_users` DISABLE KEYS */;
-INSERT INTO `t_users` (`id`, `username`, `name`, `password`) VALUES
-	(2170, 'b', 'Password', -1623739142),
-	(3756, 'peepee', 'pepe', -1623739142),
-	(8903, 'laxelott', 'Axel', -1623739142);
-/*!40000 ALTER TABLE `t_users` ENABLE KEYS */;
-
+-- Data exporting was unselected.
 -- Dumping structure for view messv3.v_messages
 DROP VIEW IF EXISTS `v_messages`;
 -- Creating temporary table to overcome VIEW dependency errors

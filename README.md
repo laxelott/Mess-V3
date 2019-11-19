@@ -3,23 +3,31 @@ It's just a Messaging app created in C#, created for ~~fun~~ the sole purpose of
 
 ## Features and plans:
 ### Functionality
-- [x] Create, modify and ~~delete~~ users.
-- [x] Send and recieve messages, with _virtually_ unlimited clients.
+- [x] Create, modify ~~and delete~~ users.
+- [x] Send and recieve messages, with _theoretically_ unlimited clients.
 - [ ] Admin functions:
-	* All this on server window and on Admin tab when logged in as admin
+
+	- #### On server window:
 	- [ ] Mute users.
 	- [ ] Delete users.
 	- [ ] Lock down server.
-	- [ ] Ban users?
+
+	- #### On admin client:
+	- [ ] Mute users.
+	- [ ] Delete users.
+	- [ ] Lock down server.
+
 - [ ] Send and recieve images.
 - [ ] Send and recieve files.
 - [ ] User icons.
 - [ ] Record of user aliases.
+
 ### UI
 - [ ] Scroll the feed.
 - [ ] Time display on hover (like image alt).
 - [ ] Set chat log background.
 - [ ] Dark theme. (_How?_)
-### FX
+
+### SFX
 - [ ] Add message recieved sound.
 	* Cannot get it to work, let's try something else.

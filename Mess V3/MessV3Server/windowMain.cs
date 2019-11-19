@@ -21,23 +21,29 @@ namespace MessV3Server {
     public partial class windowMain : Form {
 
         private static Dictionary<TcpClient, MessClient> clientList;
-        private static Dictionary<TcpClient, MessClient> mutedUsers;
+        private static Dictionary<MessClient, TcpClient> inverseClientList;
 
         private TcpListener serverSocket;
         private Thread serverThread;
         private readonly cDatos db;
+        private bool isServerLocked;
 
         public windowMain() {  
             InitializeComponent();
 
-            // Initializing
+            // Initializing variables
             int listenPort = Properties.Settings.Default.listenPort;
 
             serverSocket = new TcpListener(IPAddress.Any, listenPort);
             clientList = new Dictionary<TcpClient, MessClient>();
+            inverseClientList = new Dictionary<MessClient, TcpClient>();
 
+            // Setting textbox tabs
             lblLog.SelectionTabs = new int[] { 40, 80 };
             lblLog.AcceptsTab = true;
+
+            // Disabling user controls
+            setUserControlEnabled(false);   
 
             // Initialize Database Manager
             db = new cDatos();
@@ -61,22 +67,28 @@ namespace MessV3Server {
                     // Recieving handshake from client
                     NetworkStream networkStream = clientSocket.GetStream();
                     networkStream.Read(bytesFrom, 0, (int)clientSocket.ReceiveBufferSize);
-                } catch (IOException e) {
+                } catch (IOException) {
                     log("Client left without handshake");
                     continue;
                 }
 
 
                 MessMessage inMessage, outMessage;
-                string messageJSON;
+                string messageRaw;
                 int token;
                 dynamic content;
 
                 // Decoding json from bytes
-                messageJSON = Encoding.Unicode.GetString(bytesFrom);
+                messageRaw = Encoding.Unicode.GetString(bytesFrom);
 
                 // Deserializing json
-                inMessage = JsonConvert.DeserializeObject<MessMessage>(messageJSON);
+                try {
+                    inMessage = JsonConvert.DeserializeObject<MessMessage>(messageRaw);
+                } catch (Exception) {
+                    log("Weird message recieved:", isNew: true);
+                    log(messageRaw);
+                    continue;
+                }
 
                 log("Handshake!", true);
                 log("From: " + clientSocket.Client.RemoteEndPoint.ToString());
@@ -87,32 +99,38 @@ namespace MessV3Server {
                     // Parse data from JSON String
                     content = JsonConvert.DeserializeObject(inMessage.content);
                     token = content.token;
-                    
+
                     // TODO Ban users
-                    /* 
-                    if () {
 
-                    } else {
-
-                    }
-                    */
+                    // Validate handshake token
                     content = new JObject();
                     content.isValid = (token == "MessV3".GetHashCode());
                     content.message = (Boolean) content.isValid ? "Valid Token" : "Invalid Token";
+                    log("Token status: " + ((Boolean) content.isValid ? "valid" : "invalid"));
 
+                    if (isServerLocked) {
+                        log("Server is locked! Revoking connection...");
+                        content.message = "Server is locked, cannot connect.";
+                        content.isValid = false;
+                    }
+
+                    // Prepare handshake response
                     outMessage = new MessMessage();
                     outMessage.type = MessageTypes.HandshakeData;
                     outMessage.content = JsonConvert.SerializeObject(content);
-
+                    // Send handshake response
                     sendMessage(outMessage.toJSON(), clientSocket);
 
+                    // If the token is valid add him to the list
                     if ((Boolean) content.isValid) {
                         clientList.Add(clientSocket, new MessClient());
+
+                        // Create and start listening thread
+                        Thread clientThread = new Thread(() => { clientThreadFunction(clientSocket); });
+                        clientThread.IsBackground = true;
+                        clientThread.Start();
                     }
 
-                    Thread clientThread = new Thread(() => { clientThreadFunction(clientSocket); });
-                    clientThread.IsBackground = true;
-                    clientThread.Start();
                 });
                 handshakeThread.IsBackground = true;
                 handshakeThread.Start();
@@ -184,7 +202,7 @@ namespace MessV3Server {
             serverStream = null;
         }
 
-        // ---------------------------------------------------------- CLIENT MANAGEMENT
+        // ---------------------------------------------------------- CLIENT DB MANAGEMENT
         private MessMessage createUser(dynamic data) {
             Random random = new Random();
             MessMessage message;
@@ -352,7 +370,8 @@ namespace MessV3Server {
         }
 
         // ---------------------------------------------------------- GUI UPDATING
-        private void updateClientList() {
+        // Sends updated client list
+        private void UpdateSendUserList() {
             MessMessage outMessage;
             List<String> userList;
 
@@ -362,7 +381,7 @@ namespace MessV3Server {
             userList = new List<string>();
             foreach (KeyValuePair<TcpClient, MessClient> client in clientList) {
                 if (client.Value.isLogin) {
-                    userList.Add(client.Value.name);
+                    userList.Add(client.Value.ToString());
                 }
             }
 
@@ -374,17 +393,30 @@ namespace MessV3Server {
             broadcast(outMessage.toJSON());
             log("Sent user list to current users");
 
-            updateUserList(userList);
+            updateUIUserList();
             log("Current user list updated");
         }
-        private void updateUserList(List<string> userList) {
+        // Updates UI list
+        private void updateUIUserList() {
             this.Invoke((MethodInvoker)delegate {
                 listOnlineUsers.Items.Clear();
-
-                foreach (string user in userList) {
-                    listOnlineUsers.Items.Add(user);
+                
+                foreach (KeyValuePair<TcpClient, MessClient> user in clientList) {
+                    listOnlineUsers.Items.Add(user.Value);
                 }
             });
+        }
+        // User control buttons control
+        private void setUserControlEnabled(bool enable) {
+            btnMute.Enabled = enable;
+        }
+
+        // ---------------------------------------------------------- RANDOM
+        private void updateInverseClientList() {
+            inverseClientList.Clear();
+            foreach (KeyValuePair<TcpClient, MessClient> client in clientList) {
+                inverseClientList.Add(client.Value, client.Key);
+            }
         }
 
 
@@ -402,24 +434,26 @@ namespace MessV3Server {
             NetworkStream serverStream;
 
             try {
+                // Initializing input bytes
+
                 while (true) {
                     // Resetting variables
                     outMessage = new MessMessage();
+
                     inBytes = new byte[65536];
-
                     serverStream = clientSocket.GetStream();
-
                     buffSize = clientSocket.ReceiveBufferSize;
+
+                    // Get next message from user
                     serverStream.Read(inBytes, 0, buffSize);
 
+                    // Get data from JSON string
                     JSONMessage = Encoding.Unicode.GetString(inBytes);
                     inMessage = JsonConvert.DeserializeObject<MessMessage>(JSONMessage);
 
                     dynamic content = JsonConvert.DeserializeObject(inMessage.content);
                     authorName = clientList[clientSocket].name;
                     id = clientList[clientSocket].id;
-
-                    
                     
                     // Check for message type
                     switch (inMessage.type) {
@@ -432,6 +466,7 @@ namespace MessV3Server {
                             clientList.Remove(clientSocket);
                             clientSocket.Close();
                             log("User disconnected");
+                            UpdateSendUserList();
                             return;
                         case MessageTypes.RegisterData:
                             // Create new user
@@ -451,7 +486,7 @@ namespace MessV3Server {
 
                             sendMessage(outMessage.toJSON(), clientSocket);
                             if ((Boolean) result.login) {
-                                updateClientList();
+                                UpdateSendUserList();
                             }
                             break;
                         case MessageTypes.EditName:
@@ -465,15 +500,14 @@ namespace MessV3Server {
 
                             if ((Boolean) content.isValid) {
                                 clientList[clientSocket].name = content.newName;
-                                updateClientList();
+                                UpdateSendUserList();
                             }
 
                             sendMessage(outMessage.toJSON(), clientSocket);
                             break;
                         case MessageTypes.TextMessage:
                             // Text message
-                            if (!mutedUsers.ContainsValue(clientList[clientSocket])) {
-
+                            if (!clientList[clientSocket].isMuted) {
                                 if (clientList[clientSocket].isLogin) {
                                     // Adding author
                                     content.author = authorName;
@@ -489,23 +523,22 @@ namespace MessV3Server {
                                     broadcast(outMessage.toJSON());
                                 } else {
                                     // User hasn't logged in
-                                    // TODO Add generic "Server response" message type
-                                    // Highjacking registering data because of client's internal response to it
+                                    content.message = "Cannot send messages, user hasn't logged in!";
 
                                     // Setting message up
-                                    outMessage.type = MessageTypes.RegisterData;
-                                    outMessage.content = "Cannot send messages, user hasn't logged in!";
+                                    outMessage.type = MessageTypes.GenericData;
+                                    outMessage.content = JsonConvert.SerializeObject(content);
 
                                     // Sending message
                                     sendMessage(outMessage.toJSON(), clientSocket);
                                 }
                             } else {
                                 // User is muted
-                                // Same as before
+                                content.message = "User is muted";
 
                                 // Setting message up
-                                outMessage.type = MessageTypes.RegisterData;
-                                outMessage.content = "User is muted";
+                                outMessage.type = MessageTypes.GenericData;
+                                outMessage.content = JsonConvert.SerializeObject(content);
 
                                 // Sending message
                                 sendMessage(outMessage.toJSON(), clientSocket);
@@ -514,17 +547,20 @@ namespace MessV3Server {
 
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException) {
                 log("User disconnected forcefully", true);
+                log("Info: " + clientSocket.Client.RemoteEndPoint.ToString());
                 log("Name: " + authorName);
 
                 // Remove user from client list
                 clientList.Remove(clientSocket);
                 clientSocket.Close();
+                UpdateSendUserList();
                 return;
             } catch (Exception e) {
                 // Catch ALL Exceptions just in case
                 log(e.ToString());
+                log("Exception raised, thread terminated...", isNew: false);
             }
         }
 
@@ -533,7 +569,6 @@ namespace MessV3Server {
         // ------------------------------------------------------------------------------ LISTENERS
         private void windowMain_Load(object sender, EventArgs e) {
             numServerPort.Value = Properties.Settings.Default.listenPort;
-
 
             serverThread = new Thread(new ThreadStart(manageServer));
             serverThread.IsBackground = true;
@@ -544,13 +579,81 @@ namespace MessV3Server {
             Properties.Settings.Default.listenPort = (Int32) numServerPort.Value;
             Properties.Settings.Default.Save();
         }
-        private void btnResetServerPort_Click(object sender, EventArgs e) {
-            numServerPort.Value = Properties.Settings.Default.defaultListenPort;
-        }
-
         private void lblLog_TextChanged(object sender, EventArgs e) {
             lblLog.SelectionStart = lblLog.Text.Length;
             lblLog.ScrollToCaret();
+        }
+
+        // ---------------------------------------------------------- BUTTON LISTENERS
+        private void ListOnlineUsers_SelectedIndexChanged(object sender, EventArgs e) {
+
+            if (listOnlineUsers.SelectedItem != null) {
+                setUserControlEnabled(true);
+                MessClient activeUser = (MessClient) listOnlineUsers.SelectedItem;
+
+                // Update inverse list
+                updateInverseClientList();
+
+                // Check if user is muted, update buttons accordingly
+                if (clientList[inverseClientList[activeUser]].isMuted) {
+                    btnMute.Text = "Unmute User";
+                } else {
+                    btnMute.Text = "Mute User";
+                }
+            } else {
+                setUserControlEnabled(false);
+            }
+        }
+        private void btnResetServerPort_Click(object sender, EventArgs e) {
+            numServerPort.Value = Properties.Settings.Default.defaultListenPort;
+        }
+        private void BtnMute_Click(object sender, EventArgs e) {
+            if (listOnlineUsers.SelectedItem == null) {
+                setUserControlEnabled(false);
+                return;
+            }
+
+            MessClient userToMute = (MessClient) listOnlineUsers.SelectedItem;
+            bool toMute = (btnMute.Text == "Mute User");
+
+            // Update inverse list
+            updateInverseClientList();
+
+            // Mute or unmute client
+            if (toMute) {
+                log("Muting " + userToMute.name + "...", isNew: true);
+                clientList[inverseClientList[userToMute]].isMuted = true;
+                btnMute.Text = "Unmute User";
+            } else {
+                log("Unmuting " + userToMute.name + "...", isNew: true);
+                clientList[inverseClientList[userToMute]].isMuted = false;
+                btnMute.Text = "Mute User";
+            }
+
+            // Creating update message
+            dynamic content = new JObject();
+            content.message = String.Format("{0} {1}...", userToMute.name, (toMute ? "muted" : "able to speak"));
+            content.author = "Server";
+
+            MessMessage message = new MessMessage();
+            message.type = MessageTypes.TextMessage;
+            message.time = Utilities.DateTime2UnixTimeStamp(DateTime.UtcNow);
+            message.content = JsonConvert.SerializeObject(content);
+
+            broadcast(message.toJSON());
+
+            UpdateSendUserList();
+        }
+        private void BtnLockDownServer_Click(object sender, EventArgs e) {
+            if (isServerLocked) {
+                btnLockDownServer.Text = "Lock Server";
+                isServerLocked = false;
+                lblLockInfo.Text = "Server Open";
+            } else {
+                btnLockDownServer.Text = "Unlock Server";
+                isServerLocked = true;
+                lblLockInfo.Text = "Server Closed";
+            }
         }
     }
 }
