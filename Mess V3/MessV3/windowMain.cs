@@ -24,7 +24,6 @@ namespace MessV3 {
 
         bool isConnected;
         bool isLogin;
-        bool isFirst;
         int rowIndex = 0;
 
         public windowMain() {
@@ -33,7 +32,6 @@ namespace MessV3 {
 
             isLogin = false;
             isConnected = false;
-            isFirst = true;
 
             // Tabs Initialization
             loginTabInit();
@@ -268,7 +266,6 @@ namespace MessV3 {
         private void logMessage(string message) {
             this.Invoke((MethodInvoker)delegate {
                 Label lblMessage = new Label();
-                isFirst = false;
 
                 // Creating label that contains message
                 lblMessage.Text = message;

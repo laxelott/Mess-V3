@@ -462,11 +462,22 @@ namespace MessV3Server {
                             log("Info: " + clientSocket.Client.RemoteEndPoint.ToString());
                             log("Name: " + authorName);
 
-                            // Remove user from client list
-                            clientList.Remove(clientSocket);
+
+							// Remove user from client list
+							clientList.Remove(clientSocket);
                             clientSocket.Close();
                             log("User disconnected");
                             UpdateSendUserList();
+
+							content.author = authorName;
+							content.message = "Disconnected";
+
+							// TODO Connection message type
+							outMessage.type = MessageTypes.TextMessage;
+							outMessage.time = Utilities.DateTime2UnixTimeStamp(DateTime.UtcNow);
+							outMessage.content = JsonConvert.SerializeObject(content);
+
+							broadcast(outMessage.toJSON());
                             return;
                         case MessageTypes.RegisterData:
                             // Create new user
