@@ -27,8 +27,14 @@
             this.tableLayoutMessagesMain = new System.Windows.Forms.TableLayoutPanel();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabOnlineUsers = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupOnlineUsers = new System.Windows.Forms.GroupBox();
             this.listOnlineUsers = new System.Windows.Forms.ListBox();
+            this.groupUserControls = new System.Windows.Forms.GroupBox();
+            this.tableUserControls = new System.Windows.Forms.TableLayoutPanel();
+            this.btnDeleteUser = new System.Windows.Forms.Button();
+            this.btnMute = new System.Windows.Forms.Button();
+            this.btnLockDownServer = new System.Windows.Forms.Button();
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.tableLayoutSettings = new System.Windows.Forms.TableLayoutPanel();
             this.lblServerPort = new System.Windows.Forms.Label();
@@ -36,23 +42,18 @@
             this.btnResetServerPort = new System.Windows.Forms.Button();
             this.groupLog = new System.Windows.Forms.GroupBox();
             this.lblLog = new System.Windows.Forms.RichTextBox();
-            this.groupUserControls = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnMute = new System.Windows.Forms.Button();
-            this.btnLockDownServer = new System.Windows.Forms.Button();
-            this.btnDeleteUser = new System.Windows.Forms.Button();
+            this.lblLockInfo = new System.Windows.Forms.Label();
             this.tableLayoutMessagesMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabOnlineUsers.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.groupOnlineUsers.SuspendLayout();
+            this.groupUserControls.SuspendLayout();
+            this.tableUserControls.SuspendLayout();
             this.tabSettings.SuspendLayout();
             this.tableLayoutSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numServerPort)).BeginInit();
             this.groupLog.SuspendLayout();
-            this.groupUserControls.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutMessagesMain
@@ -94,6 +95,21 @@
             this.tabOnlineUsers.Text = "Users";
             this.tabOnlineUsers.UseVisualStyleBackColor = true;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.groupOnlineUsers, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.groupUserControls, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(224, 427);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
             // groupOnlineUsers
             // 
             this.groupOnlineUsers.Controls.Add(this.listOnlineUsers);
@@ -112,6 +128,69 @@
             this.listOnlineUsers.Name = "listOnlineUsers";
             this.listOnlineUsers.Size = new System.Drawing.Size(210, 317);
             this.listOnlineUsers.TabIndex = 3;
+            this.listOnlineUsers.SelectedIndexChanged += new System.EventHandler(this.ListOnlineUsers_SelectedIndexChanged);
+            // 
+            // groupUserControls
+            // 
+            this.groupUserControls.Controls.Add(this.tableUserControls);
+            this.groupUserControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupUserControls.Location = new System.Drawing.Point(3, 3);
+            this.groupUserControls.Name = "groupUserControls";
+            this.groupUserControls.Size = new System.Drawing.Size(218, 79);
+            this.groupUserControls.TabIndex = 4;
+            this.groupUserControls.TabStop = false;
+            this.groupUserControls.Text = "User Controls";
+            // 
+            // tableUserControls
+            // 
+            this.tableUserControls.ColumnCount = 2;
+            this.tableUserControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableUserControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableUserControls.Controls.Add(this.btnMute, 0, 1);
+            this.tableUserControls.Controls.Add(this.btnLockDownServer, 0, 0);
+            this.tableUserControls.Controls.Add(this.btnDeleteUser, 1, 1);
+            this.tableUserControls.Controls.Add(this.lblLockInfo, 1, 0);
+            this.tableUserControls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableUserControls.Location = new System.Drawing.Point(3, 16);
+            this.tableUserControls.Name = "tableUserControls";
+            this.tableUserControls.RowCount = 2;
+            this.tableUserControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableUserControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableUserControls.Size = new System.Drawing.Size(212, 60);
+            this.tableUserControls.TabIndex = 0;
+            // 
+            // btnDeleteUser
+            // 
+            this.btnDeleteUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDeleteUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDeleteUser.Location = new System.Drawing.Point(109, 33);
+            this.btnDeleteUser.Name = "btnDeleteUser";
+            this.btnDeleteUser.Size = new System.Drawing.Size(100, 24);
+            this.btnDeleteUser.TabIndex = 2;
+            this.btnDeleteUser.Text = "Delete User";
+            this.btnDeleteUser.UseVisualStyleBackColor = true;
+            // 
+            // btnMute
+            // 
+            this.btnMute.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMute.Location = new System.Drawing.Point(3, 33);
+            this.btnMute.Name = "btnMute";
+            this.btnMute.Size = new System.Drawing.Size(100, 24);
+            this.btnMute.TabIndex = 0;
+            this.btnMute.Text = "Mute User";
+            this.btnMute.UseVisualStyleBackColor = true;
+            this.btnMute.Click += new System.EventHandler(this.BtnMute_Click);
+            // 
+            // btnLockDownServer
+            // 
+            this.btnLockDownServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLockDownServer.Location = new System.Drawing.Point(3, 3);
+            this.btnLockDownServer.Name = "btnLockDownServer";
+            this.btnLockDownServer.Size = new System.Drawing.Size(100, 24);
+            this.btnLockDownServer.TabIndex = 1;
+            this.btnLockDownServer.Text = "Lock Server";
+            this.btnLockDownServer.UseVisualStyleBackColor = true;
+            this.btnLockDownServer.Click += new System.EventHandler(this.BtnLockDownServer_Click);
             // 
             // tabSettings
             // 
@@ -119,7 +198,7 @@
             this.tabSettings.Location = new System.Drawing.Point(4, 22);
             this.tabSettings.Name = "tabSettings";
             this.tabSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSettings.Size = new System.Drawing.Size(222, 529);
+            this.tabSettings.Size = new System.Drawing.Size(230, 433);
             this.tabSettings.TabIndex = 1;
             this.tabSettings.Text = "Settings";
             this.tabSettings.UseVisualStyleBackColor = true;
@@ -139,7 +218,7 @@
             this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutSettings.Size = new System.Drawing.Size(216, 84);
+            this.tableLayoutSettings.Size = new System.Drawing.Size(224, 84);
             this.tableLayoutSettings.TabIndex = 2;
             // 
             // lblServerPort
@@ -148,7 +227,7 @@
             this.lblServerPort.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblServerPort.Location = new System.Drawing.Point(3, 0);
             this.lblServerPort.Name = "lblServerPort";
-            this.lblServerPort.Size = new System.Drawing.Size(102, 42);
+            this.lblServerPort.Size = new System.Drawing.Size(106, 42);
             this.lblServerPort.TabIndex = 0;
             this.lblServerPort.Text = "Server Listen Port";
             this.lblServerPort.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -164,7 +243,7 @@
             0,
             0});
             this.numServerPort.Name = "numServerPort";
-            this.numServerPort.Size = new System.Drawing.Size(210, 20);
+            this.numServerPort.Size = new System.Drawing.Size(218, 20);
             this.numServerPort.TabIndex = 1;
             this.numServerPort.ValueChanged += new System.EventHandler(this.numServerPort_ValueChanged);
             // 
@@ -172,9 +251,9 @@
             // 
             this.btnResetServerPort.AutoSize = true;
             this.btnResetServerPort.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnResetServerPort.Location = new System.Drawing.Point(111, 3);
+            this.btnResetServerPort.Location = new System.Drawing.Point(115, 3);
             this.btnResetServerPort.Name = "btnResetServerPort";
-            this.btnResetServerPort.Size = new System.Drawing.Size(102, 36);
+            this.btnResetServerPort.Size = new System.Drawing.Size(106, 36);
             this.btnResetServerPort.TabIndex = 2;
             this.btnResetServerPort.Text = "Set Default";
             this.btnResetServerPort.UseVisualStyleBackColor = true;
@@ -202,79 +281,16 @@
             this.lblLog.TabIndex = 0;
             this.lblLog.Text = "";
             // 
-            // groupUserControls
+            // lblLockInfo
             // 
-            this.groupUserControls.Controls.Add(this.tableLayoutPanel2);
-            this.groupUserControls.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupUserControls.Location = new System.Drawing.Point(3, 3);
-            this.groupUserControls.Name = "groupUserControls";
-            this.groupUserControls.Size = new System.Drawing.Size(218, 79);
-            this.groupUserControls.TabIndex = 4;
-            this.groupUserControls.TabStop = false;
-            this.groupUserControls.Text = "User Controls";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.groupOnlineUsers, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.groupUserControls, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(224, 427);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.btnDeleteUser, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.btnMute, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.btnLockDownServer, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(212, 60);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // btnMute
-            // 
-            this.btnMute.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMute.Location = new System.Drawing.Point(3, 33);
-            this.btnMute.Name = "btnMute";
-            this.btnMute.Size = new System.Drawing.Size(100, 24);
-            this.btnMute.TabIndex = 0;
-            this.btnMute.Text = "Mute User";
-            this.btnMute.UseVisualStyleBackColor = true;
-            // 
-            // btnLockDownServer
-            // 
-            this.btnLockDownServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLockDownServer.Location = new System.Drawing.Point(3, 3);
-            this.btnLockDownServer.Name = "btnLockDownServer";
-            this.btnLockDownServer.Size = new System.Drawing.Size(100, 24);
-            this.btnLockDownServer.TabIndex = 1;
-            this.btnLockDownServer.Text = "Lock Server";
-            this.btnLockDownServer.UseVisualStyleBackColor = true;
-            // 
-            // btnDeleteUser
-            // 
-            this.btnDeleteUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDeleteUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteUser.Location = new System.Drawing.Point(109, 33);
-            this.btnDeleteUser.Name = "btnDeleteUser";
-            this.btnDeleteUser.Size = new System.Drawing.Size(100, 24);
-            this.btnDeleteUser.TabIndex = 2;
-            this.btnDeleteUser.Text = "Delete User";
-            this.btnDeleteUser.UseVisualStyleBackColor = true;
+            this.lblLockInfo.AutoSize = true;
+            this.lblLockInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLockInfo.Location = new System.Drawing.Point(109, 0);
+            this.lblLockInfo.Name = "lblLockInfo";
+            this.lblLockInfo.Size = new System.Drawing.Size(100, 30);
+            this.lblLockInfo.TabIndex = 3;
+            this.lblLockInfo.Text = "Server Open";
+            this.lblLockInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // windowMain
             // 
@@ -290,15 +306,16 @@
             this.tableLayoutMessagesMain.ResumeLayout(false);
             this.tabControlMain.ResumeLayout(false);
             this.tabOnlineUsers.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.groupOnlineUsers.ResumeLayout(false);
+            this.groupUserControls.ResumeLayout(false);
+            this.tableUserControls.ResumeLayout(false);
+            this.tableUserControls.PerformLayout();
             this.tabSettings.ResumeLayout(false);
             this.tableLayoutSettings.ResumeLayout(false);
             this.tableLayoutSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numServerPort)).EndInit();
             this.groupLog.ResumeLayout(false);
-            this.groupUserControls.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -319,10 +336,11 @@
         private System.Windows.Forms.TabPage tabSettings;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupUserControls;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableUserControls;
         private System.Windows.Forms.Button btnDeleteUser;
         private System.Windows.Forms.Button btnMute;
         private System.Windows.Forms.Button btnLockDownServer;
+        private System.Windows.Forms.Label lblLockInfo;
     }
 }
 

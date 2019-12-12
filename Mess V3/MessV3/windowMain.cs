@@ -25,6 +25,7 @@ namespace MessV3 {
         bool isConnected;
         bool isLogin;
         bool isFirst;
+        int rowIndex = 0;
 
         public windowMain() {
             InitializeComponent();
@@ -112,44 +113,44 @@ namespace MessV3 {
             String serverLocation = Properties.Settings.Default.serverLocation;
             int clientPort = Properties.Settings.Default.clientPort;
 
-            // Check if Server Location is empty
-            if (serverLocation == "") {
+			// Check if Server Location is empty
+			if (serverLocation == "") {
                 lblInfo.Text = "Please set Server Location in Settings Tab.";
                 return;
             }
             if (clientSocket.Connected) {
-                logInfo("Connected to Server");
+                logInfo("Already connected to Server");
                 return;
             }
 
-
-            messageThread = new Thread(new ThreadStart(recieveMessagesThread));
+			messageThread = new Thread(new ThreadStart(recieveMessagesThread));
             messageThread.IsBackground = true;
             Thread socketCreationThread = new Thread(() => {
                 try {
-                    // Connect socket
-                    clientSocket.Connect(serverLocation, clientPort);
+					// Connect socket
+					clientSocket.Connect(serverLocation, clientPort);
 
                     logInfo("Conneciton established! Sending handshake");
                     MessMessage outMessage = new MessMessage();
                     dynamic content = new JObject();
-
-                    messageThread.Start();
-
                     content.token = "MessV3".GetHashCode();
 
+                    // Get message contents
                     outMessage.type = MessageTypes.HandshakeData;
                     outMessage.content = JsonConvert.SerializeObject(content);
 
                     sendToServer(outMessage.toJSON());
 
                     isConnected = true;
+
+                    messageThread.Start();
                     this.Invoke((MethodInvoker)delegate {
                         btnConnect.Text = "Disconnect";
+                        tabControlMain.SelectedIndex = 1;
                     });
                 }
                 catch (SocketException e) {
-                    logInfo(e.Message);
+                    logInfo("Connection error! " + e.Message);
                 }
             });
 
@@ -262,20 +263,24 @@ namespace MessV3 {
             });
         }
 
-        // ---------------------------------------------------------- WRITE TO MESSGE LOG
+        // ---------------------------------------------------------- WRITE TO MESSAGE LOG
         private void logMessage(string message) {
             this.Invoke((MethodInvoker)delegate {
                 Label lblMessage = new Label();
-                int rowIndex = isFirst ? 0 : tableMessages.RowCount;
                 isFirst = false;
 
                 // Creating label that contains message
                 lblMessage.Text = message;
+                lblMessage.AutoSize = true;
+                lblMessage.Padding = new Padding(5);
 
                 // Adding label to table
                 tableMessages.Controls.Add(lblMessage, 0, rowIndex);
+                ++rowIndex;
             });
         }
+
+        // ---------------------------------------------------------- WRITE TO INFO LABEL
         private void logInfo(string info) {
             // Runs update UI on UI home thread
             this.Invoke((MethodInvoker)delegate {
@@ -324,7 +329,8 @@ namespace MessV3 {
 
         // ---------------------------------------------------------- PLAY MESSAGE DING
         private void playMessageSound() {
-            if (chkSettingsSound.Checked) {
+            if (chkSettingsSound.Checked && false) {
+
                 MessageBox.Show("Playing sound...");
                 MessageBox.Show(messageSoundPlayer.IsLoadCompleted.ToString());
                 
@@ -341,12 +347,11 @@ namespace MessV3 {
             while (true) {
                 int buffSize = 0;
                 byte[] inBytes = new byte[65536];
-                string messageJSON;
+                string messageJSON = "";
                 MessMessage message;
                 NetworkStream serverStream;
 
                 try {
-
                     serverStream = clientSocket.GetStream();
                     buffSize = clientSocket.ReceiveBufferSize;
                     serverStream.Read(inBytes, 0, buffSize);
@@ -354,49 +359,54 @@ namespace MessV3 {
                     // Getting JSON string from bytes
                     messageJSON = Encoding.Unicode.GetString(inBytes);
 
-                    // Getting message from JSON string
+                    // Getting message from raw JSON string
                     message = JsonConvert.DeserializeObject<MessMessage>(messageJSON);
 
+                    // Getting content from message
                     dynamic content = JsonConvert.DeserializeObject(message.content);
                     String displayMessage;
-                
 
 
-                    switch(message.type) {
+
+                    switch (message.type) {
+                        // GENERIC TYPELESS RESPONSE
+                        case MessageTypes.GenericData:
+                            logInfo("Server Response: " + content.message);
+                            break;
                         // HANDSHAKE RESPONSE
                         case MessageTypes.HandshakeData:
-                            if ((Boolean) content.isValid) {
+                            if ((Boolean)content.isValid) {
                                 initializeSelectedTab();
                             } else {
-                                clientSocket.Close(); 
+                                clientSocket.Close();
                             }
 
-                            logInfo("Server Response: " + content.message);
+                            logInfo("Server Handshake Response: " + content.message);
                             break;
 
                         // REGISTERING RETURN DATA
-                        case MessageTypes.RegisterData :
-                            logInfo((String) content.message);
+                        case MessageTypes.RegisterData:
+                            logInfo((String)content.message);
                             break;
 
                         // LOGIN RETURN DATA
                         case MessageTypes.LoginData:
                             isLogin = content.login;
 
-                            if(isLogin) {
+                            if (isLogin) {
                                 name = content.name;
                             }
 
-                            logInfo((String) content.message);
+                            logInfo((String)content.message);
                             initializeSelectedTab();
                             break;
 
                         // EDIT NAME
                         case MessageTypes.EditName:
-                            logInfo((String) content.message);
+                            logInfo((String)content.message);
 
-                            if ((Boolean) content.isValid) {
-                                name = (String) content.newName;
+                            if ((Boolean)content.isValid) {
+                                name = (String)content.newName;
                             }
                             break;
 
@@ -412,7 +422,7 @@ namespace MessV3 {
                                 Utilities.UnixTimeStamp2DateTime(message.time).ToString("dd-MM-yyyy HH:mm:ss"),
                                 content.author,
                                 content.message
-                                );
+                            );
 
                             playMessageSound();
 
@@ -438,15 +448,26 @@ namespace MessV3 {
                                 );
                             logMessage(displayMessage);
                             break;
+                        default:
+                            logInfo("Unrecognized Server Response: " + content.message);
+                            break;
                     }
-                } catch(IOException e) {
-                    string displayMessage = String.Format("[{0}] Server has Shut Down...",
-                        DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss")
-                    );
+                } catch (IOException e) {
+					string displayMessage = String.Format("[{0}] Server has probably Shut Down...\nError Message: {1}",
+						DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"),
+						e.Message
+					); ;
                     logMessage(displayMessage);
+					MessageBox.Show(displayMessage, "Error!");
 
                     reset();
                     return;
+                } catch (ObjectDisposedException) {
+                    string displayMessage = "Server has terminated the connection: " + messageJSON;
+                    logInfo(displayMessage);
+                } catch (JsonReaderException) {
+                    string displayMessage = "Server's response nonparseable: " + messageJSON;
+                    logInfo(displayMessage);
                 }
             }
         }
