@@ -24,10 +24,6 @@ namespace MessV3 {
 
         bool isConnected;
         bool isLogin;
-<<<<<<< HEAD
-        bool isFirst;
-=======
->>>>>>> 59a291f7f3a3a0702c6ef5dc0876bf902ba4b871
         int rowIndex = 0;
 
         public windowMain() {
@@ -269,10 +265,6 @@ namespace MessV3 {
         private void logMessage(string message) {
             this.Invoke((MethodInvoker)delegate {
                 Label lblMessage = new Label();
-<<<<<<< HEAD
-                isFirst = false;
-=======
->>>>>>> 59a291f7f3a3a0702c6ef5dc0876bf902ba4b871
 
                 // Creating label that contains message
                 lblMessage.Text = message;

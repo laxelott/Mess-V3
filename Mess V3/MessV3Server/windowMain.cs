@@ -454,7 +454,7 @@ namespace MessV3Server {
                     dynamic content = JsonConvert.DeserializeObject(inMessage.content);
                     authorName = clientList[clientSocket].name;
                     id = clientList[clientSocket].id;
-                    
+
                     // Check for message type
                     switch (inMessage.type) {
                         case MessageTypes.Terminate:
@@ -465,19 +465,16 @@ namespace MessV3Server {
                             clientSocket.Close();
                             log("User disconnected");
                             UpdateSendUserList();
-<<<<<<< HEAD
-=======
 
-							content.author = authorName;
-							content.message = "Disconnected";
+                            content.author = authorName;
+                            content.message = "Disconnected";
 
-							// TODO Connection message type
-							outMessage.type = MessageTypes.TextMessage;
-							outMessage.time = Utilities.DateTime2UnixTimeStamp(DateTime.UtcNow);
-							outMessage.content = JsonConvert.SerializeObject(content);
+                            // TODO Connection message type
+                            outMessage.type = MessageTypes.TextMessage;
+                            outMessage.time = Utilities.DateTime2UnixTimeStamp(DateTime.UtcNow);
+                            outMessage.content = JsonConvert.SerializeObject(content);
 
-							broadcast(outMessage.toJSON());
->>>>>>> 59a291f7f3a3a0702c6ef5dc0876bf902ba4b871
+                            broadcast(outMessage.toJSON());
                             return;
                         case MessageTypes.RegisterData:
                             // Create new user
@@ -496,7 +493,7 @@ namespace MessV3Server {
                             clientList[clientSocket].id = result.id;
 
                             sendMessage(outMessage.toJSON(), clientSocket);
-                            if ((Boolean) result.login) {
+                            if ((Boolean)result.login) {
                                 UpdateSendUserList();
                             }
                             break;
@@ -509,7 +506,7 @@ namespace MessV3Server {
 
                             content = JsonConvert.DeserializeObject(outMessage.content);
 
-                            if ((Boolean) content.isValid) {
+                            if ((Boolean)content.isValid) {
                                 clientList[clientSocket].name = content.newName;
                                 UpdateSendUserList();
                             }
@@ -568,6 +565,10 @@ namespace MessV3Server {
                 clientSocket.Close();
                 UpdateSendUserList();
                 return;
+            } catch (InvalidOperationException e) {
+                // Cannot connect to database
+                log(e.ToString());
+                log("Cannot connect to DB!");
             } catch (Exception e) {
                 // Catch ALL Exceptions just in case
                 log(e.ToString());
