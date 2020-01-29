@@ -10,9 +10,10 @@ It's just a Messaging app created in C#, created for ~~fun~~ the sole purpose of
 	- #### On server window:
 	- [ ] Mute users.
 	- [ ] Delete users.
-	- [ ] Lock down server.
+	- [x] Lock down server.
 
 	- #### On admin client:
+	- [ ] Detect when someone is an admin...
 	- [ ] Mute users.
 	- [ ] Delete users.
 	- [ ] Lock down server.
@@ -20,7 +21,7 @@ It's just a Messaging app created in C#, created for ~~fun~~ the sole purpose of
 - [ ] Send and recieve images.
 - [ ] Send and recieve files.
 - [ ] User icons.
-- [ ] Record of user aliases.
+- [ ] Record of past user aliases.
 
 ### UI
 - [ ] Scroll the feed.
